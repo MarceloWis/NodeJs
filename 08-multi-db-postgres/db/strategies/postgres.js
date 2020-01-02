@@ -58,8 +58,9 @@ class Postgres extends ICrud {
        const { dataValues } = await this._herois.create(item)
         return  dataValues
      }
-     read(query) {
-        return console.log("Item veio do Postgres")
+     async read(query = {}) {
+         const result = await this._herois.findAll({ where: query, raw: true })
+        return result
      }
      update(id, item) {
          return console.log("Item atualizado no Postgres")

@@ -18,9 +18,14 @@ describe('Postgres Strategy', () => {
         const result = await context.isConnected()
         assert.equal(result, true)
     });
-    // it('should create a new object', async () => {
-    //     const result = await context.create(MOCK_HEROI_CADASTRAR)
-    //     delete result.id
-    //     assert.deepEqual(result, MOCK_HEROI_CADASTRAR)
-    // });
+    it('should create a new object', async () => {
+        const result = await context.create(MOCK_HEROI_CADASTRAR)
+        delete result.id
+        assert.deepEqual(result, MOCK_HEROI_CADASTRAR)
+    });
+    it('listar', async function () {
+        const [result] = await context.read({ nome: MOCK_HEROI_CADASTRAR.nome })
+        delete result.id 
+        assert.deepEqual(result, MOCK_HEROI_CADASTRAR)
+    });
 });
