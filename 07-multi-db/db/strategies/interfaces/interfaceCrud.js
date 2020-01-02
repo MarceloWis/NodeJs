@@ -16,6 +16,9 @@ class ICrud extends NotImplementedExecption {
     delete(id) {
         throw new NotImplementedExecption()
     }
+    isConnected() {
+        throw new NotImplementedExecption()
+    }
 }
 
 module.exports = ICrud
