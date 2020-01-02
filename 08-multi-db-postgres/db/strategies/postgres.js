@@ -62,11 +62,13 @@ class Postgres extends ICrud {
          const result = await this._herois.findAll({ where: query, raw: true })
         return result
      }
-     update(id, item) {
-         return console.log("Item atualizado no Postgres")
+     async update(id, item) {
+        const result = await this._herois.update(item, { where: { id } })
+         return result
      }
-     delete(id) {
-         return console.log("Item deletado do Postgres")
+     async delete(id) {
+        const result = await this._herois.destroy({ where: { id } })
+        return result
      }
 }
 
