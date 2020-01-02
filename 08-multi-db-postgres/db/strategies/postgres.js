@@ -6,10 +6,9 @@ class Postgres extends ICrud {
         super()
         this._driver = null;
         this._herois = null;
-        this._connect()
     }
 
-     _connect() {
+     async connect() {
         this._driver = new Sequelize(
             'heroes',
             'marcelowis',
@@ -21,7 +20,9 @@ class Postgres extends ICrud {
                 operatorsAliases: false,
             }
         )
+       await this.defineModel()
     }
+
      async isConnected() {
         try {
            await this._driver.authenticate()
@@ -30,8 +31,8 @@ class Postgres extends ICrud {
             console.log("Error Postgres conection")
         }
     }
-    async _defineModel() {
-        this._herois = driver.define('heroes', {
+    async defineModel() {
+        this._herois = this._driver.define('heroes', {
             id: {
                 type: Sequelize.INTEGER,
                 required: true,
@@ -51,10 +52,11 @@ class Postgres extends ICrud {
             freezeTableName: false,
             timestamps: false
          })
-         await Herois.sync()
+         await this._herois.sync()
     }
-    create(item) {
-        return console.log("Item adicionado ao Postgres")
+    async create(item) {
+       const { dataValues } = await this._herois.create(item)
+        return  dataValues
      }
      read(query) {
         return console.log("Item veio do Postgres")
